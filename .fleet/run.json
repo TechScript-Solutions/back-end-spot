@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "spring-boot",
+            "name": "Spot82",
+            "mainClass": "com.techscript.spot82.Spot82Application",
+            "module": "",
+        },
+        
+    ]
+}
