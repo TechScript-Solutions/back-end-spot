@@ -13,7 +13,6 @@ public class Pagamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String data;
 
     @Enumerated(EnumType.STRING)
