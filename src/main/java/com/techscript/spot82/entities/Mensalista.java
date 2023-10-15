@@ -39,7 +39,7 @@ public class Mensalista {
     
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
-    
+
     Pagamento pagamento;
     private String email;
 
