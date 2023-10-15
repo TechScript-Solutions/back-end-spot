@@ -41,6 +41,7 @@ public class ClienteController {
         }
 
         return ResponseEntity.ok().body(clienteServices.list());
+
     }
 
     @PostMapping
@@ -53,8 +54,6 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
 
         }
-
-        gravarDados.gravarDadosDoUsuario(cliente, "clientes");
 
         clienteServices.save(cliente);
 
