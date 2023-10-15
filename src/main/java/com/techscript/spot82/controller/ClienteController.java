@@ -40,12 +40,12 @@ public class ClienteController {
             throw new ClienteExceptions("Não há clientes no momento.");
         }
 
-        return ResponseEntity.ok().body(clienteServices.list());
+        return ResponseEntity.ok().body(clientes);
 
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody @Valid Cliente cliente, BindingResult result) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente, BindingResult result) {
 
         if (result.hasErrors()) {
 
@@ -57,7 +57,7 @@ public class ClienteController {
 
         clienteServices.save(cliente);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
 
     }
 

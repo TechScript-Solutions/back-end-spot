@@ -35,7 +35,7 @@ public class ClienteServices {
 
     private PagamentoRepository pagamentoRepository;
 
-    public void save(Cliente cliente) {
+    public Cliente save(Cliente cliente) {
 
         cliente.setData(LocalDate.now());
         cliente.getPagamento().setPagamento(0.0);
@@ -50,6 +50,9 @@ public class ClienteServices {
         cliente.setVaga(vaga);
 
         vagaRepository.save(vaga);
+        clienteRepository.save(cliente);
+
+        return cliente;
 
     }
 
@@ -62,12 +65,6 @@ public class ClienteServices {
     public Cliente findByPlate(String placa) {
 
         return clienteRepository.findByPlaca(placa);
-
-    }
-
-    public Vaga findById(Long id) {
-
-        return vagaRepository.vagaDoCliente(id);
 
     }
 
@@ -108,7 +105,7 @@ public class ClienteServices {
 
     public Cliente recibo(Cliente cliente) {
 
-        findById(cliente.getId());
+        vagaRepository.vagaDoCliente(cliente.getId());
         clienteRepository.deleteById(cliente.getId());
         Vaga vaga = vagaRepository.findById(cliente.getVaga().getVagaDoCliente()).get();
         vaga.setStatus(Status.DISPONIVEL);

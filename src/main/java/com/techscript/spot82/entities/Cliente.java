@@ -16,22 +16,31 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Nome do cliente obrigatório")
     private String nome;
+
     @NotBlank(message = "Veículo obrigatório")
     private String veiculo;
+
     @NotBlank(message = "Placa obrigatória")
     private String placa;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
+
     private String horaEntrada;
+
     private String horaSaida;
+
     private String periodo;
+
     @ManyToOne
     @JoinColumn(name = "pagamento_id")
     private Pagamento pagamento;
+
     @Valid
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "vaga_id")
     private Vaga vaga;
 

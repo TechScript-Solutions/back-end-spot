@@ -13,8 +13,10 @@ public class Vaga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull(message = "Defina a vaga do cliente")
     private Long vagaDoCliente;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 

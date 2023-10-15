@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutionException;
 public class EstacionamentoController {
 
     private EstacionamentoService service;
-    private ClienteServices clienteServices;
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid Estacionamento estacionamento, BindingResult result) {

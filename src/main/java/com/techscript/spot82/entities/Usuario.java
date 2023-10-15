@@ -15,15 +15,20 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Nome obrigatório")
     private String nome;
+
     @NotBlank(message = "E-mail obrigatório")
     @Email(message = "Informe um e-mail válido")
     private String email;
+
     @NotBlank(message = "Defina sua senha")
     private String password;
+
     @NotBlank(message = "Defina a senha de confirmação")
     private String confirmaPassword;
+
     @Enumerated(EnumType.STRING)
     private Papel papel;
 
