@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @AllArgsConstructor
@@ -64,7 +63,7 @@ public class ClienteController {
     @DeleteMapping("/{placa}")
     public ResponseEntity<?> finalizar(@PathVariable String placa) {
 
-        Cliente cliente = clienteServices.findByPlate(placa);
+        Cliente cliente = clienteServices.findByPlaca(placa);
 
         if (cliente == null) {
             throw new ClienteExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
