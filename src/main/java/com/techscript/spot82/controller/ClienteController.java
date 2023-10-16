@@ -43,6 +43,11 @@ public class ClienteController {
 
     }
 
+    @GetMapping("/totais")
+    public ResponseEntity clientesTotais() {
+        return ResponseEntity.ok().body(clienteServices.clientesTotaisEstacionados());
+    }
+
     @PostMapping
     public ResponseEntity<Cliente> salvar(@RequestBody @Valid Cliente cliente, BindingResult result) {
 
