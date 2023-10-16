@@ -1,6 +1,7 @@
 package com.techscript.spot82.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techscript.spot82.enums.Tipo;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -22,6 +23,9 @@ public class Cliente {
 
     @NotBlank(message = "Veículo obrigatório")
     private String veiculo;
+
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
 
     @NotBlank(message = "Placa obrigatória")
     private String placa;
