@@ -7,5 +7,6 @@ import com.techscript.spot82.entities.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     Cliente findByPlaca(String placa);
+    boolean existsByPlaca(String placa);
 
 }

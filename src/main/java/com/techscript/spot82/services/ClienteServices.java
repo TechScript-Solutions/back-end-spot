@@ -3,6 +3,7 @@ package com.techscript.spot82.services;
 import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.exceptions.VagaOcupadaExceptions;
 import com.techscript.spot82.respository.ClienteRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
@@ -30,6 +31,10 @@ public class ClienteServices {
     private VagaService serviceVaga;
 
     public Cliente save(Cliente cliente) {
+
+        if (clienteRepository.existsByPlaca(cliente.getPlaca())) {
+            throw new ClienteExceptions("Placa já cadastrada no sistema.");
+        }
 
         serviceVaga.verificaVagaOcupada(cliente.getVaga());
 
