@@ -3,6 +3,7 @@ package com.techscript.spot82.services;
 import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.exceptions.VagaOcupadaExceptions;
 import com.techscript.spot82.respository.ClienteRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
@@ -25,6 +26,8 @@ public class ClienteServices {
     private VagaRepository vagaRepository;
 
     private PagamentoRepository pagamentoRepository;
+
+    private VagaService serviceVaga;
 
     public Cliente save(Cliente cliente) {
 

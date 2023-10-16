@@ -20,8 +20,11 @@ public class MensalistaService {
     private final MensalistaRepository mensalistaRepository;
     private final VagaRepository vagaRepository;
     private final PagamentoRepository pagamentoRepository;
+    private final VagaService vagaService;
 
     public Mensalista salvar(Mensalista mensalista) {
+
+        vagaService.verificaVagaOcupada(mensalista.getVaga());
 
         mensalista.getVaga().setStatus(Status.OCUPADA);
         mensalista.setPagamentoMensalista(mensalista.getPagamentoMensalista());

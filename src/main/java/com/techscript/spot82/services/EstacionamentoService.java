@@ -28,7 +28,9 @@ public class EstacionamentoService {
             vagaRepository.save(vaga);
         }
 
-        return estacionamentoRepository.save(estacionamento);
+        Estacionamento spot = estacionamentoRepository.save(estacionamento);
+
+        return spot;
     }
 
 }
