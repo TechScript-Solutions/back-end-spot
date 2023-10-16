@@ -1,6 +1,7 @@
 package com.techscript.spot82.services;
 
 import com.techscript.spot82.entities.Mensalista;
+import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.Status;
 import com.techscript.spot82.respository.MensalistaRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,13 +24,19 @@ public class MensalistaService {
     public Mensalista salvar(Mensalista mensalista) {
 
         mensalista.getVaga().setStatus(Status.OCUPADA);
-        mensalista.setData(LocalDate.now());
         mensalista.setPagamentoMensalista(mensalista.getPagamentoMensalista());
+        mensalista.setDataDeVencimento(LocalDateTime.now().plusMonths(1));
+
+        Vaga vaga = vagaRepository.findById(mensalista.getVaga().getVagaDoCliente()).get();
+        vaga.setStatus(Status.OCUPADA);
+        mensalista.setVaga(vaga);
+        vagaRepository.save(vaga);
 
         pagamentoRepository.save(mensalista.getPagamentoMensalista());
-        vagaRepository.save(mensalista.getVaga());
+        mensalistaRepository.save(mensalista);
 
-        return mensalistaRepository.save(mensalista);
+        return mensalista;
+
     }
 
     public List<Mensalista> listar() {

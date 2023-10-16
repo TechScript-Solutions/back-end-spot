@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -39,12 +40,11 @@ public class Mensalista {
     @JoinColumn(name = "vaga_id")
     private Vaga vaga;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate data;
-
     @ManyToOne
     @JoinColumn(name = "pagamento_id")
     private Pagamento pagamentoMensalista;
 
-    
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDateTime dataDeVencimento;
+
 }

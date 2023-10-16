@@ -1,15 +1,7 @@
 package com.techscript.spot82.services;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.FirestoreOptions;
-import com.google.cloud.firestore.WriteResult;
-import com.google.firebase.cloud.FirestoreClient;
 import com.techscript.spot82.entities.Cliente;
-import com.techscript.spot82.entities.Usuario;
 import com.techscript.spot82.entities.Vaga;
-import com.techscript.spot82.enums.Papel;
 import com.techscript.spot82.enums.Status;
 import com.techscript.spot82.respository.ClienteRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
@@ -23,7 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @AllArgsConstructor
@@ -57,15 +48,11 @@ public class ClienteServices {
     }
 
     public List<Cliente> list() {
-
         return clienteRepository.findAll();
-
     }
 
-    public Cliente findByPlate(String placa) {
-
+    public Cliente findByPlaca(String placa) {
         return clienteRepository.findByPlaca(placa);
-
     }
 
     public Cliente saida(Cliente cliente) {
