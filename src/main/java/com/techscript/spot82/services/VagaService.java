@@ -1,5 +1,6 @@
 package com.techscript.spot82.services;
 
+import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.Status;
 import com.techscript.spot82.exceptions.VagaOcupadaExceptions;
@@ -22,4 +23,5 @@ public class VagaService {
         }
 
     }
+
 }

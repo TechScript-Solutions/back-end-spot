@@ -31,8 +31,6 @@ public class ClienteServices {
 
     public Cliente save(Cliente cliente) {
 
-        serviceVaga.verificaVagaOcupada(cliente.getVaga());
-
         cliente.setData(LocalDate.now());
         cliente.getPagamento().setPagamento(0.0);
 
