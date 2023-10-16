@@ -3,6 +3,7 @@ package com.techscript.spot82.services;
 import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.exceptions.VagaOcupadaExceptions;
 import com.techscript.spot82.respository.ClienteRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
@@ -29,6 +30,8 @@ public class ClienteServices {
     private VagaService serviceVaga;
 
     public Cliente save(Cliente cliente) {
+
+        serviceVaga.verificaVagaOcupada(cliente.getVaga());
 
         cliente.setData(LocalDate.now());
         cliente.getPagamento().setPagamento(0.0);
@@ -100,6 +103,11 @@ public class ClienteServices {
         vaga.setStatus(Status.DISPONIVEL);
         vagaRepository.save(vaga);
 
+        return cliente;
+    }
+
+    public Integer clientesTotaisEstacionados() {
+        var cliente = clienteRepository.findAll().size();
         return cliente;
     }
 
