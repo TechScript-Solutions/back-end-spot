@@ -1,28 +1,30 @@
 package com.techscript.spot82.controller;
 
 import com.techscript.spot82.entities.Estacionamento;
+import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.services.ClienteServices;
 import com.techscript.spot82.services.EstacionamentoService;
+import com.techscript.spot82.services.VagaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/estacionamentos")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class EstacionamentoController {
 
     private EstacionamentoService service;
+    private VagaService vagaService;
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid Estacionamento estacionamento, BindingResult result) {
@@ -38,6 +40,11 @@ public class EstacionamentoController {
         service.salvar(estacionamento);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(estacionamento);
+    }
+
+    @GetMapping("/vagas")
+    public ResponseEntity<List<Vaga>> listar() {
+        return ResponseEntity.ok().body(vagaService.listar());
     }
 
 }

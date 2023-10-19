@@ -8,6 +8,8 @@ import com.techscript.spot82.respository.VagaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class VagaService {
@@ -22,6 +24,10 @@ public class VagaService {
             throw new VagaOcupadaExceptions("Esta vaga já está ocupada ");
         }
 
+    }
+
+    public List<Vaga> listar() {
+        return vagaRepository.findAll();
     }
 
 }
