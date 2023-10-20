@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -112,6 +113,17 @@ public class ClienteServices {
 
     public Integer clientesTotaisEstacionados() {
         var cliente = clienteRepository.findAll().size();
+        return cliente;
+    }
+
+    public Cliente buscarPorId(Long id) {
+
+        Cliente cliente = clienteRepository.findById(id).get();
+
+        if (cliente.equals(null)) {
+            throw new ClienteExceptions("Cliente não encontrado");
+        }
+
         return cliente;
     }
 
