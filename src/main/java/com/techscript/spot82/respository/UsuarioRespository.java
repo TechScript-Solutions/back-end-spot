@@ -9,6 +9,11 @@ import java.util.UUID;
 public interface UsuarioRespository extends JpaRepository<Usuario, UUID> {
 
     Optional<Usuario> papel(String papel);
+
     Optional<Usuario> nickname(String nickname);
+
     boolean existsByNickname(String nickname);
+
+    boolean existsByContato(String contato);
+
 }

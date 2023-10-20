@@ -66,4 +66,30 @@ public class UsuarioServices {
 
     }
 
+    public Usuario alterarDados(String nickname, Usuario usuario) {
+
+        try {
+
+            if (usuarioRespository.existsByNickname(usuario.getNickname())) {
+                throw new UsuarioExceptions("Nickname já registrado no sistema. Por favor, escolha outro");
+
+            } else if (usuarioRespository.existsByContato(usuario.getContato())) {
+                throw new UsuarioExceptions("Contato já registrado no sistema. Por favor, escolha outro");
+
+            }
+
+            var user = usuarioRespository.nickname(nickname).get();
+
+            usuario.setId(user.getId());
+            BeanUtils.copyProperties(usuario, user);
+            usuarioRespository.save(user);
+
+            return user;
+
+        } catch (NoSuchElementException e) {
+            throw new UsuarioExceptions("Usuário não encontrado.");
+        }
+
+    }
+
 }

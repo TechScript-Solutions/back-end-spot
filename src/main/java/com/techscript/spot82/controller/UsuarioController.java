@@ -53,4 +53,13 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuario);
 
     }
+
+    @PutMapping("/alterar")
+    public ResponseEntity<Usuario> alterarDados(@RequestParam String nickname, @RequestBody Usuario usuario) {
+
+        var usuarioAlterado = usuarioServices.alterarDados(nickname, usuario);
+
+        return ResponseEntity.ok().body(usuario);
+
+    }
 }

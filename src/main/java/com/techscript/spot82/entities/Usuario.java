@@ -27,6 +27,9 @@ public class Usuario {
     @NotBlank(message = "Defina sua senha")
     private String password;
 
+    @NotBlank(message = "Contato obrigatório")
+    private String contato;
+
     @NotBlank(message = "Defina a senha de confirmação")
     private String confirmaPassword;
 

@@ -12,6 +12,7 @@ public class UsuarioDTO {
     private UUID id;
     private String nome;
     private String nickname;
+    private String contato;
     private Papel papel;
 
     public UsuarioDTO() {
@@ -22,6 +23,7 @@ public class UsuarioDTO {
         this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.nickname = usuario.getNickname();
+        this.contato = usuario.getContato();
         this.papel = usuario.getPapel();
     }
 }
