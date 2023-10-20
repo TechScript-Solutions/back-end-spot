@@ -45,4 +45,28 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServices.save(usuario));
     }
 
+    @GetMapping("/consulta")
+    public ResponseEntity<UsuarioDTO> buscarPorNick(@RequestParam String nickname) {
+
+        var usuario = usuarioServices.buscarPorNick(nickname);
+        System.out.println(usuario);
+        return ResponseEntity.ok().body(usuario);
+
+    }
+
+    @PutMapping
+    public ResponseEntity<Usuario> alterarDados(@RequestParam String nickname, @RequestBody Usuario usuario) {
+
+        var usuarioAlterado = usuarioServices.alterarDados(nickname, usuario);
+
+        return ResponseEntity.ok().body(usuario);
+
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Usuario> removerUsuario(@RequestParam String nickname) {
+        usuarioServices.removerUsuario(nickname);
+        return ResponseEntity.noContent().build();
+    }
+
 }
