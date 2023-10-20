@@ -47,4 +47,10 @@ public class EstacionamentoController {
         return ResponseEntity.ok().body(vagaService.listar());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Vaga> buscarPorId(@PathVariable Long id) {
+        var vaga = vagaService.vagaPorId(id);
+        return ResponseEntity.ok().body(vaga);
+    }
+
 }

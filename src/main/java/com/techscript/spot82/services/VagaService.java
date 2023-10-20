@@ -30,4 +30,9 @@ public class VagaService {
         return vagaRepository.findAll();
     }
 
+    public Vaga vagaPorId(Long id) {
+        var vaga = vagaRepository.findById(id);
+        return vaga.get();
+    }
+
 }
