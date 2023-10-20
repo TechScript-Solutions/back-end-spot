@@ -54,7 +54,7 @@ public class UsuarioController {
 
     }
 
-    @PutMapping("/alterar")
+    @PutMapping
     public ResponseEntity<Usuario> alterarDados(@RequestParam String nickname, @RequestBody Usuario usuario) {
 
         var usuarioAlterado = usuarioServices.alterarDados(nickname, usuario);
@@ -62,4 +62,11 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuario);
 
     }
+
+    @DeleteMapping
+    public ResponseEntity<Usuario> removerUsuario(@RequestParam String nickname) {
+        usuarioServices.removerUsuario(nickname);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -7,6 +7,7 @@ import com.techscript.spot82.respository.UsuarioRespository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,9 @@ public class UsuarioServices {
             throw new UsuarioExceptions("E-mail de usuário já cadastrado no sistema.");
         } else if (!usuario.getPassword().equalsIgnoreCase(usuario.getConfirmaPassword())) {
             throw new UsuarioExceptions("As senhas inseridas não conferem.");
+        } else if (usuarioRespository.existsByContato(usuario.getContato())) {
+            throw new UsuarioExceptions("Contato já registrado no sistema. Por favor, escolha outro");
+
         }
 
         return usuarioRespository.save(usuario);
@@ -72,10 +76,6 @@ public class UsuarioServices {
 
             if (usuarioRespository.existsByNickname(usuario.getNickname())) {
                 throw new UsuarioExceptions("Nickname já registrado no sistema. Por favor, escolha outro");
-
-            } else if (usuarioRespository.existsByContato(usuario.getContato())) {
-                throw new UsuarioExceptions("Contato já registrado no sistema. Por favor, escolha outro");
-
             }
 
             var user = usuarioRespository.nickname(nickname).get();
@@ -90,6 +90,11 @@ public class UsuarioServices {
             throw new UsuarioExceptions("Usuário não encontrado.");
         }
 
+    }
+
+    @Transactional
+    public void removerUsuario(String nickname) {
+        usuarioRespository.deleteByNickname(nickname);
     }
 
 }
