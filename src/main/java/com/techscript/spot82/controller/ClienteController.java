@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -42,11 +43,6 @@ public class ClienteController {
 
         return ResponseEntity.ok().body(clientes);
 
-    }
-
-    @GetMapping("/totais")
-    public ResponseEntity clientesTotais() {
-        return ResponseEntity.ok().body(clienteServices.clientesTotaisEstacionados());
     }
 
     @PostMapping
@@ -81,4 +77,14 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
+    @GetMapping("/totais")
+    public ResponseEntity clientesTotais() {
+        return ResponseEntity.ok().body(clienteServices.clientesTotaisEstacionados());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
+        var cliente = clienteServices.buscarPorId(id);
+        return ResponseEntity.ok().body(cliente);
+    }
 }
