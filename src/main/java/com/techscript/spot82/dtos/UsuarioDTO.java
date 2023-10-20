@@ -4,12 +4,14 @@ import com.techscript.spot82.entities.Usuario;
 import com.techscript.spot82.enums.Papel;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class UsuarioDTO {
 
-    private Long id;
+    private UUID id;
     private String nome;
-    private String email;
+    private String nickname;
     private Papel papel;
 
     public UsuarioDTO() {
@@ -19,7 +21,7 @@ public class UsuarioDTO {
     public UsuarioDTO(Usuario usuario) {
         this.id = usuario.getId();
         this.nome = usuario.getNome();
-        this.email = usuario.getEmail();
+        this.nickname = usuario.getNickname();
         this.papel = usuario.getPapel();
     }
 }

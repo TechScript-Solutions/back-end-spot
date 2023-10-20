@@ -45,4 +45,12 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServices.save(usuario));
     }
 
+    @GetMapping("/consulta")
+    public ResponseEntity<UsuarioDTO> buscarPorNick(@RequestParam String nickname) {
+
+        var usuario = usuarioServices.buscarPorNick(nickname);
+        System.out.println(usuario);
+        return ResponseEntity.ok().body(usuario);
+
+    }
 }
