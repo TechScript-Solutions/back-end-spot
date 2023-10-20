@@ -2,7 +2,6 @@ package com.techscript.spot82.controller;
 
 import com.techscript.spot82.dtos.UsuarioDTO;
 import com.techscript.spot82.entities.Usuario;
-import com.techscript.spot82.exceptions.UsuarioExceptions;
 import com.techscript.spot82.services.UsuarioServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +32,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid Usuario usuario, BindingResult result) {
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
 
             Map<String, String> erros = new HashMap<>();
             result.getFieldErrors().forEach(erro -> erros.put(erro.getField(), erro.getDefaultMessage()));

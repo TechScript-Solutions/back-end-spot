@@ -6,8 +6,6 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import com.techscript.spot82.entities.Usuario;
-import com.techscript.spot82.enums.Papel;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.ExecutionException;
