@@ -2,15 +2,17 @@ package com.techscript.spot82.services;
 
 import com.techscript.spot82.entities.Mensalista;
 import com.techscript.spot82.entities.Vaga;
-import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.enums.StatusDaVaga;
+import com.techscript.spot82.enums.StatusPagamentoMensalista;
 import com.techscript.spot82.respository.MensalistaRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -24,14 +26,18 @@ public class MensalistaService {
 
     public Mensalista salvar(Mensalista mensalista) {
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDateTime data = LocalDateTime.now().plusMonths(1);
+        String dataFormatada = data.format(formatter);
+
         vagaService.verificaVagaOcupada(mensalista.getVaga());
 
-        mensalista.getVaga().setStatus(Status.OCUPADA);
+        mensalista.getVaga().setStatusDaVaga(StatusDaVaga.OCUPADA);
         mensalista.setPagamentoMensalista(mensalista.getPagamentoMensalista());
-        mensalista.setDataDeVencimento(LocalDateTime.now().plusMonths(1));
+        mensalista.setDataDeVencimento(dataFormatada);
 
         Vaga vaga = vagaRepository.findById(mensalista.getVaga().getVagaDoCliente()).get();
-        vaga.setStatus(Status.OCUPADA);
+        vaga.setStatusDaVaga(StatusDaVaga.OCUPADA);
         mensalista.setVaga(vaga);
         vagaRepository.save(vaga);
 
@@ -44,6 +50,25 @@ public class MensalistaService {
 
     public List<Mensalista> listar() {
         return mensalistaRepository.findAll();
+    }
+
+    public List<Mensalista> mensalistasAtrasados() {
+        List<Mensalista> mensalistas = mensalistaRepository.statusPagamento(StatusPagamentoMensalista.ATRASADO);
+        return mensalistas;
+    }
+
+    public void removerMensalista(String cpf) {
+
+        var mensalistaBusca = mensalistaRepository.cpf(cpf);
+
+        var vaga = new Vaga();
+        vaga.setId(mensalistaBusca.getVaga().getVagaDoCliente());
+        vaga.setVagaDoCliente(mensalistaBusca.getVaga().getVagaDoCliente());
+        vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
+        vagaRepository.save(vaga);
+
+        mensalistaRepository.delete(mensalistaBusca);
+
     }
 
 }

@@ -2,7 +2,7 @@ package com.techscript.spot82.services;
 
 import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Vaga;
-import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.enums.StatusDaVaga;
 import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.respository.ClienteRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -47,7 +46,7 @@ public class ClienteServices {
         cliente.setHoraEntrada(LocalTime.now().format(formatter));
 
         Vaga vaga = vagaRepository.findById(cliente.getVaga().getVagaDoCliente()).get();
-        vaga.setStatus(Status.OCUPADA);
+        vaga.setStatusDaVaga(StatusDaVaga.OCUPADA);
         cliente.setVaga(vaga);
 
         vagaRepository.save(vaga);
@@ -105,7 +104,7 @@ public class ClienteServices {
         vagaRepository.vagaDoCliente(cliente.getId());
         clienteRepository.deleteById(cliente.getId());
         Vaga vaga = vagaRepository.findById(cliente.getVaga().getVagaDoCliente()).get();
-        vaga.setStatus(Status.DISPONIVEL);
+        vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
         vagaRepository.save(vaga);
 
         return cliente;

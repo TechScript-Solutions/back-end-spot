@@ -1,12 +1,9 @@
 package com.techscript.spot82.entities;
 
-import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.enums.StatusDaVaga;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 @Entity
@@ -20,6 +17,6 @@ public class Vaga {
     private Long vagaDoCliente;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusDaVaga statusDaVaga;
 
 }
