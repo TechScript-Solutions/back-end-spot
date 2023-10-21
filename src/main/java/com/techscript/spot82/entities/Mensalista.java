@@ -17,7 +17,7 @@ public class Mensalista {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
     
     @NotBlank(message = "Insira o nome do cliente")
     private String nome;
