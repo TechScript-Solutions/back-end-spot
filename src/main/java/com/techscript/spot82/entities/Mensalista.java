@@ -1,6 +1,7 @@
 package com.techscript.spot82.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techscript.spot82.enums.StatusPagamentoMensalista;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +37,9 @@ public class Mensalista {
     @NotNull(message = "Insira o número")
     private Integer numero;
 
+    @Enumerated(EnumType.STRING)
+    private StatusPagamentoMensalista statusPagamento;
+
     @Valid
     @OneToOne
     @JoinColumn(name = "vaga_id")
@@ -45,7 +49,6 @@ public class Mensalista {
     @JoinColumn(name = "pagamento_id")
     private Pagamento pagamentoMensalista;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDateTime dataDeVencimento;
+    private String dataDeVencimento;
 
 }

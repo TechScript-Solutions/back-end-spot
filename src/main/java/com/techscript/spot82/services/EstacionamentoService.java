@@ -2,7 +2,7 @@ package com.techscript.spot82.services;
 
 import com.techscript.spot82.entities.Estacionamento;
 import com.techscript.spot82.entities.Vaga;
-import com.techscript.spot82.enums.Status;
+import com.techscript.spot82.enums.StatusDaVaga;
 import com.techscript.spot82.respository.EstacionamentoRepository;
 import com.techscript.spot82.respository.UsuarioRespository;
 import com.techscript.spot82.respository.VagaRepository;
@@ -24,7 +24,7 @@ public class EstacionamentoService {
         for (long i = 1; i <= estacionamento.getVaga(); i++) {
             Vaga vaga = new Vaga();
             vaga.setVagaDoCliente(i);
-            vaga.setStatus(Status.DISPONIVEL);
+            vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
             vagaRepository.save(vaga);
         }
 

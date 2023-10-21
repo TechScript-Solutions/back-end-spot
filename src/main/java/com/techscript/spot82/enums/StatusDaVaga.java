@@ -1,6 +1,6 @@
 package com.techscript.spot82.enums;
 
-public enum Status {
+public enum StatusDaVaga {
 
     DISPONIVEL,
     OCUPADA
