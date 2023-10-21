@@ -3,6 +3,7 @@ package com.techscript.spot82.services;
 import com.techscript.spot82.entities.Mensalista;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.StatusDaVaga;
+import com.techscript.spot82.enums.StatusPagamentoMensalista;
 import com.techscript.spot82.respository.MensalistaRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
@@ -48,6 +49,11 @@ public class MensalistaService {
 
     public List<Mensalista> listar() {
         return mensalistaRepository.findAll();
+    }
+
+    public List<Mensalista> mensalistasAtrasados() {
+        List<Mensalista> mensalistas = mensalistaRepository.statusPagamento(StatusPagamentoMensalista.ATRASADO);
+        return mensalistas;
     }
 
 }

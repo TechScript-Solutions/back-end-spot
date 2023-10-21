@@ -29,4 +29,9 @@ public class MensalistaController {
         return ResponseEntity.ok().body(listaMensalistas);
     }
 
+    @GetMapping("/atrasados")
+    public ResponseEntity<List<Mensalista>> mensalistasAtrasados() {
+        return ResponseEntity.ok().body(mensalistaService.mensalistasAtrasados());
+    }
+
 }
