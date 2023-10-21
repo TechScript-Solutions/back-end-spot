@@ -9,6 +9,7 @@ import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +55,20 @@ public class MensalistaService {
     public List<Mensalista> mensalistasAtrasados() {
         List<Mensalista> mensalistas = mensalistaRepository.statusPagamento(StatusPagamentoMensalista.ATRASADO);
         return mensalistas;
+    }
+
+    public void removerMensalista(String cpf) {
+
+        var mensalistaBusca = mensalistaRepository.cpf(cpf);
+
+        var vaga = new Vaga();
+        vaga.setId(mensalistaBusca.getVaga().getVagaDoCliente());
+        vaga.setVagaDoCliente(mensalistaBusca.getVaga().getVagaDoCliente());
+        vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
+        vagaRepository.save(vaga);
+
+        mensalistaRepository.delete(mensalistaBusca);
+
     }
 
 }

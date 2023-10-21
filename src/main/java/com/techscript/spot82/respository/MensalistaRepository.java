@@ -8,5 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface MensalistaRepository extends JpaRepository<Mensalista, Long> {
+
     List<Mensalista> statusPagamento(StatusPagamentoMensalista atrasados);
+    Mensalista cpf(String cpf);
 }
