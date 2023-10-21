@@ -47,7 +47,6 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> buscarPorNick(@RequestParam String nickname) {
 
         var usuario = usuarioServices.buscarPorNick(nickname);
-        System.out.println(usuario);
         return ResponseEntity.ok().body(usuario);
 
     }
