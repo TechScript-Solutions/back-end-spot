@@ -6,6 +6,7 @@ import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
 import com.techscript.spot82.services.ClienteServices;
+import com.techscript.spot82.services.EstacionamentoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -29,6 +29,7 @@ public class ClienteController {
     private VagaRepository vagaRepository;
 
     private PagamentoRepository pagamentoRepository;
+    private EstacionamentoService estacionamentoService;
 
     private GravarDados gravarDados;
 
@@ -62,17 +63,17 @@ public class ClienteController {
 
     }
 
-    @DeleteMapping("/{placa}")
-    public ResponseEntity<?> finalizar(@PathVariable String placa) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> finalizar(@PathVariable Long id) {
 
-        Cliente cliente = clienteServices.findByPlaca(placa);
+        Cliente cliente = estacionamentoService.findByVagaId(id);
 
         if (cliente == null) {
             throw new ClienteExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
         }
 
-        clienteServices.recibo(cliente);
         clienteServices.saida(cliente);
+        clienteServices.recibo(cliente);
 
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }

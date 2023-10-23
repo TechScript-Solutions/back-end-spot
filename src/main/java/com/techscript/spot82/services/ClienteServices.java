@@ -10,7 +10,6 @@ import com.techscript.spot82.respository.VagaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,6 +27,8 @@ public class ClienteServices {
     private PagamentoRepository pagamentoRepository;
 
     private VagaService serviceVaga;
+
+    private EstacionamentoService estacionamentoService;
 
     public Cliente save(Cliente cliente) {
 
@@ -60,15 +61,11 @@ public class ClienteServices {
         return clienteRepository.findAll();
     }
 
-    public Cliente findByPlaca(String placa) {
-        return clienteRepository.findByPlaca(placa);
-    }
-
     public Cliente saida(Cliente cliente) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        cliente.setHoraSaida(LocalTime.now().format(formatter));
+        cliente.setHoraSaida(LocalTime.now().plusHours(5).plusMinutes(32).format(formatter));
 
         LocalTime entrada = LocalTime.parse(cliente.getHoraEntrada(), formatter);
         LocalTime saida = LocalTime.parse(cliente.getHoraSaida(), formatter);
@@ -79,21 +76,7 @@ public class ClienteServices {
         String periodo = localTime.format(formatter);
         cliente.setPeriodo(periodo);
 
-        Double total = intervalo.toMinutes() % 60 * 0.0233333333333333;
-
-        DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        String totalFormatter = decimalFormat.format(total);
-
-        if (intervalo.toMinutes() % 60 <= 300) {
-            cliente.getPagamento().setPagamento(7.0);
-        } else {
-            cliente.getPagamento().setPagamento(Double.parseDouble(totalFormatter));
-        }
-
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        cliente.getPagamento().setData(LocalDate.now().format(formatterDate));
-        pagamentoRepository.save(cliente.getPagamento());
+        cliente = estacionamentoService.buscarTaxa(intervalo, cliente);
 
         return cliente;
 

@@ -1,7 +1,9 @@
 package com.techscript.spot82.controller;
 
+import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Estacionamento;
 import com.techscript.spot82.entities.Vaga;
+import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.services.ClienteServices;
 import com.techscript.spot82.services.EstacionamentoService;
 import com.techscript.spot82.services.VagaService;
@@ -48,9 +50,20 @@ public class EstacionamentoController {
     }
 
     @GetMapping("/vagas/{id}")
-    public ResponseEntity<Vaga> buscarPorId(@PathVariable Long id) {
-        var vaga = vagaService.vagaPorId(id);
-        return ResponseEntity.ok().body(vaga);
+    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable Long id) {
+        Cliente cliente = service.findByVagaId(id);
+
+        if (cliente == null) {
+            throw new ClienteExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
+        }
+
+        return ResponseEntity.ok().body(cliente);
     }
+
+//    @GetMapping("/vagas/{id}")
+//    public ResponseEntity<Vaga> buscarPorId(@PathVariable Long id) {
+//        var vaga = vagaService.vagaPorId(id);
+//        return ResponseEntity.ok().body(vaga);
+//    }
 
 }

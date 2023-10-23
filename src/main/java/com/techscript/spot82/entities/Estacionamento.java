@@ -1,5 +1,6 @@
 package com.techscript.spot82.entities;
 
+import com.techscript.spot82.enums.TaxaPorAtraso;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -20,10 +21,19 @@ public class Estacionamento {
     private String nome;
 
     @NotBlank(message = "Insira um CPF ou CNPJ")
-    private String cnpj;
+    private String documento;
 
     @NotNull(message = "Informe a quantidade de vagas do estacionamento")
     private Integer vaga;
+
+    @NotNull(message = "Informe o período máximo de permanência sem taxas (se houver)")
+    private Integer periodo;
+
+    @NotNull(message = "Adicione o valor por período")
+    private Double valor;
+
+    @Enumerated(EnumType.STRING)
+    private TaxaPorAtraso taxaPorAtraso;
 
     @Valid
     @OneToOne
