@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface VagaRepository extends JpaRepository<Vaga, Long> {
 
     Vaga vagaDoCliente(Long vaga);
+    Vaga findByClienteId(Long id);
 }

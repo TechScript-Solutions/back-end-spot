@@ -30,7 +30,7 @@ public class MensalistaService {
         LocalDateTime data = LocalDateTime.now().plusMonths(1);
         String dataFormatada = data.format(formatter);
 
-        vagaService.verificaVagaOcupada(mensalista.getVaga());
+        vagaService.verificaVagaOcupada(mensalista.getVaga().getVagaDoCliente());
 
         mensalista.getVaga().setStatusDaVaga(StatusDaVaga.OCUPADA);
         mensalista.setPagamentoMensalista(mensalista.getPagamentoMensalista());

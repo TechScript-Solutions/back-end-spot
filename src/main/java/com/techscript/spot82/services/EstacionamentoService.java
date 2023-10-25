@@ -79,7 +79,7 @@ public class EstacionamentoService {
 
 
     public Cliente findByVagaId(Long id) {
-        return clienteRepository.findByVagaId(id);
+        return clienteRepository.findById(id).get();
     }
 
 }

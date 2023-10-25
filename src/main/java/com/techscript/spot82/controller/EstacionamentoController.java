@@ -50,8 +50,8 @@ public class EstacionamentoController {
     }
 
     @GetMapping("/vagas/{id}")
-    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable Long id) {
-        Cliente cliente = service.findByVagaId(id);
+    public ResponseEntity<Vaga> buscarClientePorId(@PathVariable Long id) {
+        Vaga cliente = vagaService.vagaPorId(id);
 
         if (cliente == null) {
             throw new ClienteExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
@@ -59,11 +59,5 @@ public class EstacionamentoController {
 
         return ResponseEntity.ok().body(cliente);
     }
-
-//    @GetMapping("/vagas/{id}")
-//    public ResponseEntity<Vaga> buscarPorId(@PathVariable Long id) {
-//        var vaga = vagaService.vagaPorId(id);
-//        return ResponseEntity.ok().body(vaga);
-//    }
 
 }

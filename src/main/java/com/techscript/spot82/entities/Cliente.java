@@ -31,6 +31,9 @@ public class Cliente {
     @NotBlank(message = "Placa obrigatória")
     private String placa;
 
+    @NotNull(message = "Insira a vaga")
+    private Long vaga;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 
@@ -43,10 +46,5 @@ public class Cliente {
     @ManyToOne
     @JoinColumn(name = "pagamento_id")
     private Pagamento pagamento;
-
-    @Valid
-    @OneToOne
-    @JoinColumn(name = "vaga_id")
-    private Vaga vaga;
 
 }

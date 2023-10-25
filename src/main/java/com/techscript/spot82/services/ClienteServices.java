@@ -46,12 +46,13 @@ public class ClienteServices {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         cliente.setHoraEntrada(LocalTime.now().format(formatter));
 
-        Vaga vaga = vagaRepository.findById(cliente.getVaga().getVagaDoCliente()).get();
+        Vaga vaga = vagaRepository.findById(cliente.getVaga()).get();
         vaga.setStatusDaVaga(StatusDaVaga.OCUPADA);
-        cliente.setVaga(vaga);
+        cliente.setVaga(vaga.getVagaDoCliente());
+        vaga.setCliente(cliente);
 
-        vagaRepository.save(vaga);
         clienteRepository.save(cliente);
+        vagaRepository.save(vaga);
 
         return cliente;
 
@@ -86,7 +87,7 @@ public class ClienteServices {
 
         vagaRepository.vagaDoCliente(cliente.getId());
         clienteRepository.deleteById(cliente.getId());
-        Vaga vaga = vagaRepository.findById(cliente.getVaga().getVagaDoCliente()).get();
+        Vaga vaga = vagaRepository.findById(cliente.getVaga()).get();
         vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
         vagaRepository.save(vaga);
 
