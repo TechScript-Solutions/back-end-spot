@@ -2,6 +2,7 @@ package com.techscript.spot82.entities;
 
 import com.techscript.spot82.enums.StatusDaVaga;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

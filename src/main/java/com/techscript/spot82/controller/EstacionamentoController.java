@@ -60,10 +60,4 @@ public class EstacionamentoController {
         return ResponseEntity.ok().body(cliente);
     }
 
-//    @GetMapping("/vagas/{id}")
-//    public ResponseEntity<Vaga> buscarPorId(@PathVariable Long id) {
-//        var vaga = vagaService.vagaPorId(id);
-//        return ResponseEntity.ok().body(vaga);
-//    }
-
 }
