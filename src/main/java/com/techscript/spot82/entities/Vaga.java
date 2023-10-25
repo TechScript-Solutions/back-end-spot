@@ -20,4 +20,9 @@ public class Vaga {
     @Enumerated(EnumType.STRING)
     private StatusDaVaga statusDaVaga;
 
+    @Valid
+    @OneToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
 }

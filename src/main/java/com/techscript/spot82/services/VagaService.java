@@ -15,9 +15,9 @@ public class VagaService {
 
     private VagaRepository vagaRepository;
 
-    public void verificaVagaOcupada(Vaga vaga) {
+    public void verificaVagaOcupada(Long vaga) {
 
-        Vaga verificaVaga = vagaRepository.findById(vaga.getVagaDoCliente()).get();
+        Vaga verificaVaga = vagaRepository.findById(vaga).get();
 
         if(verificaVaga.getStatusDaVaga().equals(StatusDaVaga.OCUPADA)) {
             throw new VagaOcupadaExceptions("Esta vaga já está ocupada ");
@@ -32,6 +32,11 @@ public class VagaService {
     public Vaga vagaPorId(Long id) {
         var vaga = vagaRepository.findById(id);
         return vaga.get();
+    }
+
+    public Vaga clientePorId(Long id) {
+        var vaga = vagaRepository.findByClienteId(id);
+        return vaga;
     }
 
 }
