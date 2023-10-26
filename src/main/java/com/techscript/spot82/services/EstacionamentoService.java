@@ -45,7 +45,6 @@ public class EstacionamentoService {
                 String totalFormatter = decimalFormat.format(total);
 
                 cliente.getPagamento().setPagamento(Double.parseDouble(totalFormatter));
-                System.out.println(cliente.getPagamento().getPagamento());
 
 
             case SEM_TAXA:
@@ -56,7 +55,6 @@ public class EstacionamentoService {
                 pagamentoRepository.save(cliente.getPagamento());
 
         }
-
 
         return cliente;
     }
@@ -78,8 +76,8 @@ public class EstacionamentoService {
     }
 
 
-    public Cliente findByVagaId(Long id) {
-        return clienteRepository.findById(id).get();
+    public Cliente findByVaga(Long id) {
+        return clienteRepository.findByVaga(id).get();
     }
 
 }
