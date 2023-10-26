@@ -47,7 +47,7 @@ public class MensalistaController {
     }
 
     @DeleteMapping("/{cpf}")
-    public ResponseEntity removerMensalista(@PathVariable String cpf) {
+    public ResponseEntity<Void> removerMensalista(@PathVariable String cpf) {
         mensalistaService.removerMensalista(cpf);
         return ResponseEntity.noContent().build();
     }

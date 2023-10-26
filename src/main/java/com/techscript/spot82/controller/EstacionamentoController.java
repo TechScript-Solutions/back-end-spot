@@ -1,10 +1,8 @@
 package com.techscript.spot82.controller;
 
-import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Estacionamento;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.exceptions.ClienteExceptions;
-import com.techscript.spot82.services.ClienteServices;
 import com.techscript.spot82.services.EstacionamentoService;
 import com.techscript.spot82.services.VagaService;
 import jakarta.validation.Valid;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @AllArgsConstructor
