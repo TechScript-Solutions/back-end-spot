@@ -9,6 +9,7 @@ import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -66,7 +67,7 @@ public class ClienteServices {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        cliente.setHoraSaida(LocalTime.now().plusHours(5).plusMinutes(32).format(formatter));
+        cliente.setHoraSaida(LocalTime.now().format(formatter));
 
         LocalTime entrada = LocalTime.parse(cliente.getHoraEntrada(), formatter);
         LocalTime saida = LocalTime.parse(cliente.getHoraSaida(), formatter);
@@ -83,13 +84,14 @@ public class ClienteServices {
 
     }
 
+    @Transactional
     public Cliente recibo(Cliente cliente) {
 
-        vagaRepository.vagaDoCliente(cliente.getId());
-        clienteRepository.deleteById(cliente.getId());
         Vaga vaga = vagaRepository.findById(cliente.getVaga()).get();
         vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
+        vaga.setCliente(null);
         vagaRepository.save(vaga);
+        clienteRepository.deleteByVaga(cliente.getVaga());
 
         return cliente;
     }

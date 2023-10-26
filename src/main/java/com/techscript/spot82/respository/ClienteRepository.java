@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    Optional<Cliente> findById(Long id);
+    Optional<Cliente> findByVaga(Long id);
     boolean existsByPlaca(String placa);
+    void deleteByVaga(Long vaga);
 
 }

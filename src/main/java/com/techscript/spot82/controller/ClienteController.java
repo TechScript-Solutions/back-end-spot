@@ -66,7 +66,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> finalizar(@PathVariable Long id) {
 
-        Cliente cliente = estacionamentoService.findByVagaId(id);
+        Cliente cliente = estacionamentoService.findByVaga(id);
 
         if (cliente == null) {
             throw new ClienteExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
