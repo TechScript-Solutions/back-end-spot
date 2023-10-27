@@ -29,19 +29,21 @@ public class MensalistaService {
         LocalDateTime data = LocalDateTime.now().plusMonths(1);
         String dataFormatada = data.format(formatter);
 
-        vagaService.verificaVagaOcupada(mensalista.getVaga().getVagaDoCliente());
+        vagaService.verificaVagaOcupada(mensalista.getVaga());
 
-        mensalista.getVaga().setStatusDaVaga(StatusDaVaga.OCUPADA);
         mensalista.setPagamentoMensalista(mensalista.getPagamentoMensalista());
         mensalista.setDataDeVencimento(dataFormatada);
 
-        Vaga vaga = vagaRepository.findById(mensalista.getVaga().getVagaDoCliente()).get();
-        vaga.setStatusDaVaga(StatusDaVaga.OCUPADA);
-        mensalista.setVaga(vaga);
-        vagaRepository.save(vaga);
-
         pagamentoRepository.save(mensalista.getPagamentoMensalista());
+
+        Vaga vaga = vagaRepository.findById(mensalista.getVaga()).get();
+
+        vaga.setStatusDaVaga(StatusDaVaga.OCUPADA);
+        mensalista.setVaga(vaga.getVagaDoCliente());
+        vaga.setMensalista(mensalista);
+
         mensalistaRepository.save(mensalista);
+        vagaRepository.save(vaga);
 
         return mensalista;
 
@@ -61,8 +63,8 @@ public class MensalistaService {
         var mensalistaBusca = mensalistaRepository.cpf(cpf);
 
         var vaga = new Vaga();
-        vaga.setId(mensalistaBusca.getVaga().getVagaDoCliente());
-        vaga.setVagaDoCliente(mensalistaBusca.getVaga().getVagaDoCliente());
+        vaga.setId(mensalistaBusca.getVaga());
+        vaga.setVagaDoCliente(mensalistaBusca.getVaga());
         vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
         vagaRepository.save(vaga);
 

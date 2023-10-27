@@ -2,7 +2,6 @@ package com.techscript.spot82.entities;
 
 import com.techscript.spot82.enums.StatusPagamentoMensalista;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -38,15 +37,14 @@ public class Mensalista {
     @Enumerated(EnumType.STRING)
     private StatusPagamentoMensalista statusPagamento;
 
-    @Valid
-    @OneToOne
-    @JoinColumn(name = "vaga_id")
-    private Vaga vaga;
+    private String dataDeVencimento;
+
+    @NotNull(message = "Insira a vaga")
+    private Long vaga;
 
     @ManyToOne
     @JoinColumn(name = "pagamento_id")
     private Pagamento pagamentoMensalista;
 
-    private String dataDeVencimento;
 
 }

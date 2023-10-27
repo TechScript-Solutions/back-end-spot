@@ -25,4 +25,9 @@ public class Vaga {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @Valid
+    @OneToOne
+    @JoinColumn(name = "mensalista_id")
+    private Mensalista mensalista;
+
 }
