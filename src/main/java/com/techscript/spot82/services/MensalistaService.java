@@ -4,12 +4,15 @@ import com.techscript.spot82.entities.Mensalista;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.StatusDaVaga;
 import com.techscript.spot82.enums.StatusPagamentoMensalista;
+import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.respository.MensalistaRepository;
 import com.techscript.spot82.respository.PagamentoRepository;
 import com.techscript.spot82.respository.VagaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -56,6 +59,23 @@ public class MensalistaService {
     public List<Mensalista> mensalistasAtrasados() {
         List<Mensalista> mensalistas = mensalistaRepository.statusPagamento(StatusPagamentoMensalista.ATRASADO);
         return mensalistas;
+    }
+
+    public Mensalista pagamentoMensalista(String cpf, Mensalista mensalista) {
+
+        var mensalist = mensalistaRepository.cpf(cpf);
+
+        if (mensalist == null) {
+            throw new ClienteExceptions("Mensalista não encontrado");
+        }
+        mensalista.setId(mensalist.getId());
+        mensalista.setDataDeVencimento(LocalDate.now().plusMonths(1).toString());
+
+        BeanUtils.copyProperties(mensalista, mensalist);
+        pagamentoRepository.save(mensalist.getPagamentoMensalista());
+        mensalistaRepository.save(mensalist);
+
+        return mensalist;
     }
 
     public void removerMensalista(String cpf) {

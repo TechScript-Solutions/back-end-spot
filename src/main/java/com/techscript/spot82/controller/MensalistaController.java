@@ -46,6 +46,19 @@ public class MensalistaController {
         return ResponseEntity.ok().body(mensalistaService.mensalistasAtrasados());
     }
 
+    @PutMapping("/pagamento/{cpf}")
+    public ResponseEntity<Mensalista> pagamentoMensalista(@PathVariable String cpf, @RequestBody @Valid Mensalista mensalista, BindingResult result) {
+
+        if (result.hasErrors()) {
+            Map<String, String> erros = new HashMap<>();
+            result.getFieldErrors().forEach(error -> erros.put(error.getField(), error.getDefaultMessage()));
+        }
+
+        mensalistaService.pagamentoMensalista(cpf, mensalista);
+
+        return ResponseEntity.ok().body(mensalista);
+    }
+
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Void> removerMensalista(@PathVariable String cpf) {
         mensalistaService.removerMensalista(cpf);
