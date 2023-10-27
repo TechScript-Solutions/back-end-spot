@@ -1,10 +1,8 @@
 package com.techscript.spot82.controller;
 
-import com.techscript.spot82.configuracao.GravarDados;
+//import com.techscript.spot82.configuracao.GravarDados;
 import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.exceptions.ClienteExceptions;
-import com.techscript.spot82.respository.PagamentoRepository;
-import com.techscript.spot82.respository.VagaRepository;
 import com.techscript.spot82.services.ClienteServices;
 import com.techscript.spot82.services.EstacionamentoService;
 import jakarta.validation.Valid;
@@ -26,12 +24,9 @@ public class ClienteController {
 
     private ClienteServices clienteServices;
 
-    private VagaRepository vagaRepository;
-
-    private PagamentoRepository pagamentoRepository;
     private EstacionamentoService estacionamentoService;
 
-    private GravarDados gravarDados;
+    // private GravarDados gravarDados;
 
     @GetMapping
     public ResponseEntity<List<Cliente>> listar() {
@@ -79,7 +74,7 @@ public class ClienteController {
     }
 
     @GetMapping("/totais")
-    public ResponseEntity clientesTotais() {
+    public ResponseEntity<Integer> clientesTotais() {
         return ResponseEntity.ok().body(clienteServices.clientesTotaisEstacionados());
     }
 
@@ -88,4 +83,5 @@ public class ClienteController {
         var cliente = clienteServices.buscarPorId(id);
         return ResponseEntity.ok().body(cliente);
     }
+
 }
