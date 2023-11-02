@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/estacionamentos")
-@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:4200/"})
 public class EstacionamentoController {
 
     private EstacionamentoService service;
