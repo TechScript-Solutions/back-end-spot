@@ -1,6 +1,7 @@
 package com.techscript.spot82.controller;
 
 //import com.techscript.spot82.configuracao.GravarDados;
+
 import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.services.ClienteServices;
@@ -19,7 +20,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/clientes")
-@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:4200/"})
 public class ClienteController {
 
     private ClienteServices clienteServices;
