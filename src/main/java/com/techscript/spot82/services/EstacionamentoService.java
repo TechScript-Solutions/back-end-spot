@@ -44,15 +44,11 @@ public class EstacionamentoService {
                 DecimalFormat decimalFormat = new DecimalFormat("#,00");
                 String totalFormatter = decimalFormat.format(total);
 
-                cliente.getPagamento().setPagamento(Double.parseDouble(totalFormatter));
-
+                cliente.setPagamento(totalFormatter);
 
             case SEM_TAXA:
 
                 DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                cliente.getPagamento().setPagamento(7.0);
-                cliente.getPagamento().setData(LocalDate.now().format(formatterDate));
-                pagamentoRepository.save(cliente.getPagamento());
 
         }
 

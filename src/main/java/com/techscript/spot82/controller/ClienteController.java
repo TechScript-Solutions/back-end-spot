@@ -59,7 +59,7 @@ public class ClienteController {
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/recibo/{id}")
     public ResponseEntity<?> finalizar(@PathVariable Long id) {
 
         Cliente cliente = estacionamentoService.findByVaga(id);

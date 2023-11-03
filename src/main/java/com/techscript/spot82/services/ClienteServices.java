@@ -1,6 +1,7 @@
 package com.techscript.spot82.services;
 
 import com.techscript.spot82.entities.Cliente;
+import com.techscript.spot82.entities.Pagamento;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.StatusDaVaga;
 import com.techscript.spot82.exceptions.ClienteExceptions;
@@ -40,9 +41,6 @@ public class ClienteServices {
         serviceVaga.verificaVagaOcupada(cliente.getVaga());
 
         cliente.setData(LocalDate.now());
-        cliente.getPagamento().setPagamento(0.0);
-
-        pagamentoRepository.save(cliente.getPagamento());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         cliente.setHoraEntrada(LocalTime.now().format(formatter));
@@ -52,7 +50,11 @@ public class ClienteServices {
         cliente.setVaga(vaga.getVagaDoCliente());
         vaga.setCliente(cliente);
 
+        var pagamento = new Pagamento();
+        pagamento.setCliente(cliente);
+
         clienteRepository.save(cliente);
+        pagamentoRepository.save(pagamento);
         vagaRepository.save(vaga);
 
         return cliente;
@@ -80,6 +82,10 @@ public class ClienteServices {
 
         cliente = estacionamentoService.buscarTaxa(intervalo, cliente);
 
+        var pagamento = new Pagamento();
+        pagamento.setPagamento(cliente.getPagamento());
+        pagamento.setFormaDePagamento(cliente.getFormaDePagamento());
+
         return cliente;
 
     }
@@ -87,13 +93,22 @@ public class ClienteServices {
     @Transactional
     public Cliente recibo(Cliente cliente) {
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Vaga vaga = vagaRepository.findById(cliente.getVaga()).get();
         vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
         vaga.setCliente(null);
         vagaRepository.save(vaga);
+
+        var clientePagamento = pagamentoRepository.findByClienteId(cliente.getId());
+        clientePagamento.setPagamento(cliente.getPagamento());
+        clientePagamento.setFormaDePagamento(cliente.getFormaDePagamento());
+        clientePagamento.setData(formatter.format(LocalDate.now()));
+        clientePagamento.setCliente(null);
+        pagamentoRepository.save(clientePagamento);
         clienteRepository.deleteByVaga(cliente.getVaga());
 
         return cliente;
+
     }
 
     public Integer clientesTotaisEstacionados() {

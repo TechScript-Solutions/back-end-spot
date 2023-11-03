@@ -15,5 +15,6 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
     @Query("SELECT SUM(t.pagamento) FROM Pagamento t")
     Double sumAll();
 
+    Pagamento findByClienteId(Long id);
 
 }
