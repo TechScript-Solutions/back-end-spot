@@ -69,7 +69,6 @@ public class ClienteController {
         }
 
         clienteServices.saida(cliente);
-        clienteServices.recibo(cliente);
 
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }

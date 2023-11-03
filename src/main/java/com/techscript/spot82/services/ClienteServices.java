@@ -50,11 +50,7 @@ public class ClienteServices {
         cliente.setVaga(vaga.getVagaDoCliente());
         vaga.setCliente(cliente);
 
-        var pagamento = new Pagamento();
-        pagamento.setCliente(cliente);
-
         clienteRepository.save(cliente);
-        pagamentoRepository.save(pagamento);
         vagaRepository.save(vaga);
 
         return cliente;
@@ -65,6 +61,7 @@ public class ClienteServices {
         return clienteRepository.findAll();
     }
 
+    @Transactional
     public Cliente saida(Cliente cliente) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -80,31 +77,23 @@ public class ClienteServices {
         String periodo = localTime.format(formatter);
         cliente.setPeriodo(periodo);
 
-        cliente = estacionamentoService.buscarTaxa(intervalo, cliente);
+        cliente = estacionamentoService.calcularValor(intervalo, cliente);
+
+        DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         var pagamento = new Pagamento();
         pagamento.setPagamento(cliente.getPagamento());
         pagamento.setFormaDePagamento(cliente.getFormaDePagamento());
+        pagamento.setData(formater.format(LocalDate.now()));
+        pagamento.setCliente(null);
 
-        return cliente;
+        pagamentoRepository.save(pagamento);
 
-    }
-
-    @Transactional
-    public Cliente recibo(Cliente cliente) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         Vaga vaga = vagaRepository.findById(cliente.getVaga()).get();
         vaga.setStatusDaVaga(StatusDaVaga.DISPONIVEL);
         vaga.setCliente(null);
-        vagaRepository.save(vaga);
 
-        var clientePagamento = pagamentoRepository.findByClienteId(cliente.getId());
-        clientePagamento.setPagamento(cliente.getPagamento());
-        clientePagamento.setFormaDePagamento(cliente.getFormaDePagamento());
-        clientePagamento.setData(formatter.format(LocalDate.now()));
-        clientePagamento.setCliente(null);
-        pagamentoRepository.save(clientePagamento);
+        vagaRepository.save(vaga);
         clienteRepository.deleteByVaga(cliente.getVaga());
 
         return cliente;

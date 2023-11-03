@@ -4,14 +4,12 @@ import com.techscript.spot82.entities.Cliente;
 import com.techscript.spot82.entities.Estacionamento;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.enums.StatusDaVaga;
-import com.techscript.spot82.enums.TaxaPorAtraso;
 import com.techscript.spot82.respository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -24,33 +22,35 @@ public class EstacionamentoService {
     private PagamentoRepository pagamentoRepository;
     private ClienteRepository clienteRepository;
 
-    public Cliente buscarTaxa(Duration intervalo, Cliente cliente) {
+    public Cliente calcularValor(Duration intervalo, Cliente cliente) {
 
-        var verificaTaxa = estacionamentoRepository.findBytaxaPorAtraso(TaxaPorAtraso.COM_TAXA);
-        var taxa = estacionamentoRepository.valor();
+//        Estacionamento verificaTaxa = estacionamentoRepository.findBytaxaPorAtraso(TaxaPorAtraso.COM_TAXA);
+        boolean taxar = false;
+        Double taxa = estacionamentoRepository.valor();
         Double aplicarTaxa = taxa / 60;
 
         /*
-        * Falta calcular as os minutos/horas passadas;
-        * Tem que pegar apenas do que passou pelo periodo (5h)
-        * */
+         * Falta calcular os minutos/horas passadas;
+         * Tem que pegar apenas do que passou pelo periodo (5h)
+         */
 
-        switch (verificaTaxa.getTaxaPorAtraso()) {
+        if (taxar == true) {
 
-            case COM_TAXA:
+            taxa += intervalo.toMinutes() % 60 * aplicarTaxa;
 
-                Double total = intervalo.toMinutes() % 60 * aplicarTaxa;
+            DecimalFormat decimalFormat = new DecimalFormat("#,00");
+            String totalFormatter = decimalFormat.format(taxa);
 
-                DecimalFormat decimalFormat = new DecimalFormat("#,00");
-                String totalFormatter = decimalFormat.format(total);
+            cliente.setPagamento(totalFormatter);
 
-                cliente.setPagamento(totalFormatter);
+        } else {
 
-            case SEM_TAXA:
-
-                DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            cliente.setPagamento(taxa.toString());
 
         }
+
+        clienteRepository.save(cliente);
 
         return cliente;
     }
