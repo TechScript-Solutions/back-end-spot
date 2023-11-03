@@ -1,6 +1,7 @@
 package com.techscript.spot82.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techscript.spot82.enums.FormaDePagamento;
 import com.techscript.spot82.enums.Tipo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -35,14 +36,15 @@ public class Cliente {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 
+    @Enumerated(EnumType.STRING)
+    private FormaDePagamento formaDePagamento;
+
+    private String pagamento;
+
     private String horaEntrada;
 
     private String horaSaida;
 
     private String periodo;
-
-    @ManyToOne
-    @JoinColumn(name = "pagamento_id")
-    private Pagamento pagamento;
 
 }

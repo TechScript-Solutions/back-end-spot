@@ -17,6 +17,10 @@ public class Pagamento {
     @Enumerated(EnumType.STRING)
     private FormaDePagamento formaDePagamento;
 
-    private Double pagamento;
+    private String pagamento;
+
+    @OneToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
 }
