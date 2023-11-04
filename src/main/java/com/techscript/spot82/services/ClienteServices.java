@@ -62,7 +62,7 @@ public class ClienteServices {
     }
 
     @Transactional
-    public Cliente saida(Cliente cliente) {
+    public Cliente saida(Cliente cliente, String formaDePagamento) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -82,8 +82,9 @@ public class ClienteServices {
         DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         var pagamento = new Pagamento();
+        System.out.println(formaDePagamento);
         pagamento.setPagamento(cliente.getPagamento());
-        pagamento.setFormaDePagamento(cliente.getFormaDePagamento());
+        pagamento.setFormaDePagamento(formaDePagamento);
         pagamento.setData(formater.format(LocalDate.now()));
         pagamento.setCliente(null);
 

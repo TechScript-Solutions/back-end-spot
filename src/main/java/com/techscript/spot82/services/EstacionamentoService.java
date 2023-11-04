@@ -29,11 +29,6 @@ public class EstacionamentoService {
         Double taxa = estacionamentoRepository.valor();
         Double aplicarTaxa = taxa / 60;
 
-        /*
-         * Falta calcular os minutos/horas passadas;
-         * Tem que pegar apenas do que passou pelo periodo (5h)
-         */
-
         if (taxar == true) {
 
             taxa += intervalo.toMinutes() % 60 * aplicarTaxa;
