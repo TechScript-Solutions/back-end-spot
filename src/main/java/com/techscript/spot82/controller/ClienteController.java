@@ -59,8 +59,8 @@ public class ClienteController {
 
     }
 
-    @DeleteMapping("/recibo/{id}")
-    public ResponseEntity<?> finalizar(@PathVariable Long id) {
+    @DeleteMapping("/recibo/{id}/{formaDePagamento}")
+    public ResponseEntity<?> finalizar(@PathVariable Long id, @PathVariable String formaDePagamento) {
 
         Cliente cliente = estacionamentoService.findByVaga(id);
 
@@ -68,7 +68,7 @@ public class ClienteController {
             throw new ClienteExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
         }
 
-        clienteServices.saida(cliente);
+        clienteServices.saida(cliente, formaDePagamento);
 
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }

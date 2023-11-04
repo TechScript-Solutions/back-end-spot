@@ -1,5 +1,6 @@
 package com.techscript.spot82.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.techscript.spot82.enums.FormaDePagamento;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,8 +15,7 @@ public class Pagamento {
 
     private String data;
 
-    @Enumerated(EnumType.STRING)
-    private FormaDePagamento formaDePagamento;
+    private String formaDePagamento;
 
     private String pagamento;
 

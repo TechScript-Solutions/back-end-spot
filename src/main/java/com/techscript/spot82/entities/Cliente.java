@@ -36,8 +36,7 @@ public class Cliente {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate data;
 
-    @Enumerated(EnumType.STRING)
-    private FormaDePagamento formaDePagamento;
+    private String formaDePagamento;
 
     private String pagamento;
 
