@@ -1,9 +1,11 @@
 package com.techscript.spot82.controller;
 
 import com.techscript.spot82.entities.Estacionamento;
+import com.techscript.spot82.entities.Pagamento;
 import com.techscript.spot82.entities.Vaga;
 import com.techscript.spot82.exceptions.ClienteExceptions;
 import com.techscript.spot82.services.EstacionamentoService;
+import com.techscript.spot82.services.PagamentoService;
 import com.techscript.spot82.services.VagaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,7 @@ public class EstacionamentoController {
 
     private EstacionamentoService service;
     private VagaService vagaService;
+    private PagamentoService pagamentoService;
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid Estacionamento estacionamento, BindingResult result) {
@@ -55,6 +59,11 @@ public class EstacionamentoController {
         }
 
         return ResponseEntity.ok().body(cliente);
+    }
+
+    @GetMapping("/pagamentos")
+    public ResponseEntity<List<Pagamento>> listarPagamentos() {
+        return ResponseEntity.ok().body(pagamentoService.pagamentosDodDia(LocalDateTime.now()));
     }
 
 }

@@ -4,6 +4,8 @@ import com.techscript.spot82.entities.Pagamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 
     @Query("SELECT SUM(t.pagamento) FROM Pagamento t WHERE t.data = :data")
@@ -14,6 +16,8 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
 
     @Query("SELECT SUM(t.pagamento) FROM Pagamento t")
     Double sumAll();
+
+    List<Pagamento> findByData(String dataDeHoje);
 
     Pagamento findByClienteId(Long id);
 
