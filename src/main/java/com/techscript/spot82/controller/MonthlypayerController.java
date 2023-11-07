@@ -16,6 +16,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/mensalistas")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:4200/"})
 public class MonthlypayerController {
 
     private final MonthlypayerService monthlypayerService;

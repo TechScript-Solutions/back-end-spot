@@ -38,7 +38,7 @@ public class ClientServices {
             throw new ClientExceptions("Placa já cadastrada no sistema.");
         }
 
-        serviceVaga.verificaVagaOcupada(client.getSpot());
+        serviceVaga.checkSpotBusy(client.getSpot());
 
         client.setDate(LocalDate.now());
 
@@ -62,32 +62,32 @@ public class ClientServices {
     }
 
     @Transactional
-    public Client saida(Client client, String formaDePagamento) {
+    public Client exit(Client client, String methodPayment) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         client.setHourExit(LocalTime.now().format(formatter));
 
-        LocalTime entrada = LocalTime.parse(client.getHourEntry(), formatter);
-        LocalTime saida = LocalTime.parse(client.getHourExit(), formatter);
+        LocalTime entry = LocalTime.parse(client.getHourEntry(), formatter);
+        LocalTime exit = LocalTime.parse(client.getHourExit(), formatter);
 
-        Duration intervalo = Duration.between(entrada, saida);
+        Duration interval = Duration.between(entry, exit);
 
-        LocalTime localTime = LocalTime.of((int) intervalo.toHours(), (int) intervalo.toMinutes() % 60);
-        String periodo = localTime.format(formatter);
-        client.setPeriod(periodo);
+        LocalTime localTime = LocalTime.of((int) interval.toHours(), (int) interval.toMinutes() % 60);
+        String period = localTime.format(formatter);
+        client.setPeriod(period);
 
-        client = parkingService.calcularValor(intervalo, client);
+        client = parkingService.calcularValor(interval, client);
 
         DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        var pagamento = new Payment();
-        pagamento.setPayment(client.getPayment());
-        pagamento.setMethodPayment(formaDePagamento);
-        pagamento.setDate(formater.format(LocalDate.now()));
-        pagamento.setClient(null);
+        var payment = new Payment();
+        payment.setPayment(client.getPayment());
+        payment.setMethodPayment(methodPayment);
+        payment.setDate(formater.format(LocalDate.now()));
+        payment.setClient(null);
 
-        paymentRepository.save(pagamento);
+        paymentRepository.save(payment);
 
         Spot spot = spotRepository.findById(client.getSpot()).get();
         spot.setStatusSpot(StatusSpot.DISPONIVEL);
@@ -100,12 +100,12 @@ public class ClientServices {
 
     }
 
-    public Integer clientesTotaisEstacionados() {
+    public Integer allClientsParked() {
         var cliente = clientRepository.findAll().size();
         return cliente;
     }
 
-    public Client buscarPorId(Long id) {
+    public Client findById(Long id) {
 
         Client client = clientRepository.findById(id).get();
 

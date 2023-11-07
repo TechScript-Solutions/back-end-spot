@@ -47,12 +47,12 @@ public class ParkingController {
 
     @GetMapping("/vagas")
     public ResponseEntity<List<Spot>> listar() {
-        return ResponseEntity.ok().body(spotService.listar());
+        return ResponseEntity.ok().body(spotService.list());
     }
 
     @GetMapping("/vagas/{id}")
     public ResponseEntity<Spot> buscarClientePorId(@PathVariable Long id) {
-        Spot cliente = spotService.vagaPorId(id);
+        Spot cliente = spotService.SpotById(id);
 
         if (cliente == null) {
             throw new ClientExceptions("Placa inexistente no sistema! Verifique e tente novamente.");

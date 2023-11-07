@@ -15,28 +15,28 @@ public class SpotService {
 
     private SpotRepository spotRepository;
 
-    public void verificaVagaOcupada(Long vaga) {
+    public void checkSpotBusy(Long vaga) {
 
-        Spot verificaSpot = spotRepository.findById(vaga).get();
+        Spot checkSpot = spotRepository.findById(vaga).get();
 
-        if(verificaSpot.getStatusSpot().equals(StatusSpot.OCUPADA)) {
+        if(checkSpot.getStatusSpot().equals(StatusSpot.OCUPADA)) {
             throw new SpotBusyExceptions("Esta vaga já está ocupada ");
         }
 
     }
 
-    public List<Spot> listar() {
+    public List<Spot> list() {
         return spotRepository.findAll();
     }
 
-    public Spot vagaPorId(Long id) {
-        var vaga = spotRepository.findById(id);
-        return vaga.get();
+    public Spot SpotById(Long id) {
+        var spot = spotRepository.findById(id);
+        return spot.get();
     }
 
-    public Spot clientePorId(Long id) {
-        var vaga = spotRepository.findByClientId(id);
-        return vaga;
+    public Spot clientById(Long id) {
+        var spot = spotRepository.findByClientId(id);
+        return spot;
     }
 
 }

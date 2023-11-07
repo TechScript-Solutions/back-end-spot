@@ -17,6 +17,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/usuarios")
+@CrossOrigin(origins = {"http://localhost:5173/", "http://localhost:4200/"})
 public class UserController {
 
     private UserServices userServices;
@@ -24,7 +25,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDTO>> list() {
 
-        List<UserDTO> usuarios = userServices.listar();
+        List<UserDTO> usuarios = userServices.list();
 
         return ResponseEntity.ok().body(usuarios);
     }
@@ -44,9 +45,9 @@ public class UserController {
     }
 
     @GetMapping("/consulta")
-    public ResponseEntity<UserDTO> buscarPorNick(@RequestParam String nickname) {
+    public ResponseEntity<UserDTO> findByNick(@RequestParam String nickname) {
 
-        var usuario = userServices.buscarPorNick(nickname);
+        var usuario = userServices.findByNick(nickname);
         return ResponseEntity.ok().body(usuario);
 
     }
@@ -59,7 +60,7 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<User> removerUsuario(@RequestParam String nickname) {
-        userServices.removerUsuario(nickname);
+        userServices.removeUser(nickname);
         return ResponseEntity.noContent().build();
     }
 

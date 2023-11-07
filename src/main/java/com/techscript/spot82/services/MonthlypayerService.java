@@ -32,7 +32,7 @@ public class MonthlypayerService {
         LocalDateTime data = LocalDateTime.now().plusMonths(1);
         String dataFormatada = data.format(formatter);
 
-        spotService.verificaVagaOcupada(monthlyPayer.getSpot());
+        spotService.checkSpotBusy(monthlyPayer.getSpot());
 
         monthlyPayer.setPaymentMensalista(monthlyPayer.getPaymentMensalista());
         monthlyPayer.setDueDate(dataFormatada);

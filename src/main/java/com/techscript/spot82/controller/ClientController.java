@@ -59,8 +59,8 @@ public class ClientController {
 
     }
 
-    @DeleteMapping("/recibo/{id}/{formaDePagamento}")
-    public ResponseEntity<?> finalizar(@PathVariable Long id, @PathVariable String formaDePagamento) {
+    @DeleteMapping("/recibo/{id}/{methodPayment}")
+    public ResponseEntity<?> finalizar(@PathVariable Long id, @PathVariable String methodPayment) {
 
         Client client = parkingService.findByVaga(id);
 
@@ -68,19 +68,19 @@ public class ClientController {
             throw new ClientExceptions("Placa inexistente no sistema! Verifique e tente novamente.");
         }
 
-        clientServices.saida(client, formaDePagamento);
+        clientServices.exit(client, methodPayment);
 
         return ResponseEntity.status(HttpStatus.OK).body(client);
     }
 
     @GetMapping("/totais")
-    public ResponseEntity<Integer> clientesTotais() {
-        return ResponseEntity.ok().body(clientServices.clientesTotaisEstacionados());
+    public ResponseEntity<Integer> allClients() {
+        return ResponseEntity.ok().body(clientServices.allClientsParked());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> buscarPorId(@PathVariable Long id) {
-        var cliente = clientServices.buscarPorId(id);
+        var cliente = clientServices.findById(id);
         return ResponseEntity.ok().body(cliente);
     }
 
