@@ -33,7 +33,7 @@ public class UserServices {
         return usuarioRespository.save(user);
     }
 
-    public List<UserDTO> listar() {
+    public List<UserDTO> list() {
         List<User> users = usuarioRespository.findAll();
         List<UserDTO> usuarioDTOs = new ArrayList<>();
 
@@ -51,7 +51,7 @@ public class UserServices {
 
     }
 
-    public UserDTO buscarPorNick(String nickname) {
+    public UserDTO findByNick(String nickname) {
 
         try {
 
@@ -70,21 +70,21 @@ public class UserServices {
 
     }
 
-    public User alterarDados(String nickname, User usuario) {
+    public User changeData(String nickname, User user) {
 
         try {
 
-            if (usuarioRespository.existsByNickname(usuario.getNickname())) {
+            if (usuarioRespository.existsByNickname(user.getNickname())) {
                 throw new UserExceptions("Nickname já registrado no sistema. Por favor, escolha outro");
             }
 
-            var user = usuarioRespository.nickname(nickname).get();
+            var userFind = usuarioRespository.nickname(nickname).get();
 
-            usuario.setId(user.getId());
-            BeanUtils.copyProperties(usuario, user);
-            usuarioRespository.save(user);
+            user.setId(userFind.getId());
+            BeanUtils.copyProperties(user, userFind);
+            usuarioRespository.save(userFind);
 
-            return user;
+            return userFind;
 
         } catch (NoSuchElementException e) {
             throw new UserExceptions("Usuário não encontrado.");
@@ -93,7 +93,7 @@ public class UserServices {
     }
 
     @Transactional
-    public void removerUsuario(String nickname) {
+    public void removeUser(String nickname) {
         usuarioRespository.deleteByNickname(nickname);
     }
 
